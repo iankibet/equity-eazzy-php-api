@@ -7,7 +7,7 @@ $equity = new Equity($consumer_key,$consumer_secret);
 
 //send money
 try{
-    $equity->sendMoney($destination,$transfer,$reference,$sender_name);
+
     $destination = [
         'accountNumber'=>123456,
         'bicCode'=>'KCBLKENX005',
@@ -26,6 +26,7 @@ try{
     ];
     $reference = 'item_001011';
     $sender_name = 'Hosea Kangogo';
+    $equity->sendMoney($destination,$transfer,$reference,$sender_name);
 
 }catch(\Exception $e){
     var_dump($e->getMessage());
