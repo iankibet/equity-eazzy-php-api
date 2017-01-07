@@ -19,7 +19,7 @@ $ composer require ictianspecialist/equity
 <?php
 use Equity\Equity\Equity;
 $consumer_key = 'your-consumer-key';
-$consumer_secret = your-consumer-secret';
+$consumer_secret = 'your-consumer-secret';
 $equity = new Equity($consumer_key,$consumer_secret);
 ```
 ### 2. Buy Airtime
