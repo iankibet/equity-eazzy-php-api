@@ -20,22 +20,34 @@ class Equity
     }
 
 
-
-    public function buyAirtime($phone,$amount,$provider){
+    public function buyAirtime($phone,$amount,$provider,$reference = null){
+        $data = [];
+        $data['customer'] = [
+            'mobileNumber'=>$phone
+        ];
+        $data['airtime']=[
+            'amount'=>$amount,
+            'reference'=>$reference,
+            'telco'=>$provider
+        ];
+        $data = json_encode($data);
         $url = $this->base_transaction_url.'/airtime';
-        $data = '{
-    "customer": {
-        "mobileNumber": "'.$phone.'"
-    },
-    "airtime": {
-        "amount": "'.$amount.'",
-        "reference": "artm-'.strtotime(date('y-m-d h:i')).'",
-        "telco": "'.$provider.'"
-    }
-    }';
         $response = $this->post($url,$data);
-        var_dump($response);
+        return $response;
+    }
 
+    public function sendMoney($destination= array(),$transfer = array(),$transaction_reference,$sender_name){
+            $data = [];
+            $data['transactionReference'] = $transaction_reference;
+            $data['source'] = [
+                'senderName'=>$sender_name
+            ];
+            $data['destination']=$destination;
+            $data['transfer'] = $transfer;
+            $data = json_encode($data);
+            $url = $this->base_transaction_url.'/remittance';
+            $response = $this->post($url,$data);
+            var_dump($response);exit;
     }
 
     protected function getDefaultHeader(){
@@ -77,13 +89,12 @@ class Equity
         curl_setopt($curl, CURLOPT_HEADER, 0);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         curl_setopt($curl,CURLOPT_HTTPHEADER, $header);
-        $content = curl_exec($curl);
+        $response = curl_exec($curl);
         $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         if($status>199 && $status <205){
-            return json_decode($content);
+            return json_decode($response);
         }else{
-            var_dump($url,$status,$content);exit;
-            throw new \Exception(json_encode($content));
+            throw new \Exception($response);
         }
     }
 }
