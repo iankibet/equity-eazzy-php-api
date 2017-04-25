@@ -8,6 +8,7 @@ Below are the main services offered
   - Get Payment Status
   - Create Payment
 The library provided here helps you do above tasks easily
+
 ## Installation
 To install just run
 ```sh
