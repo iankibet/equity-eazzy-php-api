@@ -47,7 +47,7 @@ class Equity
             $data = json_encode($data);
             $url = $this->base_transaction_url.'/remittance';
             $response = $this->post($url,$data);
-            var_dump($response);exit;
+            return $response;
     }
 
     protected function getDefaultHeader(){
